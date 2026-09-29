@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="site-title">jaoriche studio - เครดิตการซื้อขาย</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #FFF0F5;
+            --text-color: #5A4A42;
+            --btn-color: #FFB6C1;
+            --btn-text-color: #FFFFFF;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Mitr', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 100px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 1.2rem;
+            animation: floatUp 1s ease-out forwards;
+            z-index: 9999;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -100px) scale(1.3); opacity: 0; }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 600; }
+        .nav-btns { display: flex; gap: 10px; align-items: center; }
+
+        .btn-icon {
+            background: var(--btn-color);
+            color: var(--btn-text-color);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .btn-admin {
+            background: var(--btn-color);
+            color: var(--btn-text-color);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .banner-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            margin-bottom: 20px;
+            background: #eee;
+        }
+
+        .banner-container img { width: 100%; height: 100%; object-fit: cover; }
+        .shop-info h1 { font-size: 2rem; margin-bottom: 8px; }
+        .shop-info p { font-size: 1rem; opacity: 0.85; margin-bottom: 30px; }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 18px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.03);
+            text-align: left;
+            position: relative;
+        }
+
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--btn-color);
+            color: var(--btn-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .user-info .name { font-weight: 600; font-size: 0.95rem; }
+        .user-info .stars { color: #FFD166; font-size: 0.8rem; }
+        .review-text { font-size: 0.9rem; line-height: 1.5; opacity: 0.9; word-break: break-word; }
+        .delete-btn { position: absolute; top: 15px; right: 15px; color: #ff6b6b; cursor: pointer; font-size: 0.9rem; }
+
+        .fab-review {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--btn-color);
+            color: var(--btn-text-color);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 90;
+        }
+
+        .fab-review:hover { transform: translateX(-50%) scale(1.05); }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-content h2 { margin-bottom: 15px; text-align: center; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.2rem; cursor: pointer; color: #888; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; font-weight: 500; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 10px; outline: none; font-size: 0.9rem; }
+        .form-group input[type="color"] { height: 40px; padding: 2px; cursor: pointer; }
+        .color-picker-wrapper { display: flex; gap: 10px; align-items: center; }
+        .btn-submit { width: 100%; background: var(--btn-color); color: var(--btn-text-color); border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header>
+        <div class="logo" id="nav-logo">jaoriche studio</div>
+        <div class="nav-btns">
+            <button class="btn-icon" id="music-btn" onclick="toggleMusic()" title="เปิด/ปิดเพลง">
+                <i class="fa-solid fa-music"></i>
+            </button>
+            <button class="btn-admin" id="admin-login-btn" onclick="openAdminModal()">
+                <i class="fa-solid fa-user-gear"></i> แอดมิน
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="banner-container">
+            <img id="shop-banner" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000" alt="Banner">
+        </div>
+
+        <div class="shop-info">
+            <h1 id="display-shop-name">jaoriche studio</h1>
+            <p id="display-shop-desc">ขอบคุณที่เข้ามาแสดงความพึงพอใจค่ะ</p>
+        </div>
+
+        <h3 style="text-align: left; margin-bottom: 15px;">
+            <i class="fa-solid fa-heart" style="color:var(--btn-color)"></i> รีวิวจากลูกค้า
+        </h3>
+        <div class="reviews-grid" id="reviews-container"></div>
+    </div>
+
+    <button class="fab-review" onclick="openModal('review-modal')">
+        <i class="fa-solid fa-pen-nib"></i> เขียนรีวิว
+    </button>
+
+    <!-- Modal 1: เขียนรีวิว -->
+    <div class="modal" id="review-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('review-modal')">&times;</span>
+            <h2>เขียนรีวิว</h2>
+            <form onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label>ชื่อของคุณ / ชื่อผู้ใช้</label>
+                    <input type="text" id="reviewer-name" required placeholder="เช่น น้องพาสเทล">
+                </div>
+                <div class="form-group">
+                    <label>ข้อความรีวิว</label>
+                    <textarea id="reviewer-msg" rows="4" required placeholder="ประทับใจบริการอย่างไรบ้างคะ..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">ส่งรีวิว ✨</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal 2: ล็อกอิน แอดมิน -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('login-modal')">&times;</span>
+            <h2>เข้าสู่ระบบแอดมิน</h2>
+            <form onsubmit="loginAdmin(event)">
+                <div class="form-group">
+                    <label>รหัสผ่านแอดมิน</label>
+                    <input type="password" id="admin-password-input" required placeholder="กรอกรหัสผ่าน">
+                </div>
+                <button type="submit" class="btn-submit">เข้าสู่ระบบ</button>
+            </form>
+        </div>
+    </div>
+        <!-- Modal 3: หลังบ้าน Admin Panel -->
+    <div class="modal" id="admin-panel-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('admin-panel-modal')">&times;</span>
+            <h2>จัดการร้านค้า (หลังบ้าน)</h2>
+            <form onsubmit="saveAdminSettings(event)">
+                <div class="form-group">
+                    <label>ชื่อร้าน</label>
+                    <input type="text" id="setting-shop-name">
+                </div>
+                <div class="form-group">
+                    <label>รายละเอียดร้าน</label>
+                    <textarea id="setting-shop-desc" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ลิงก์รูปแบนเนอร์ (รองรับลิงก์ Google Drive)</label>
+                    <input type="text" id="setting-banner-url" placeholder="https://drive.google.com/...">
+                </div>
+                <div class="form-group">
+                    <label>ลิงก์ไฟล์เพลง MP3</label>
+                    <input type="text" id="setting-music-url" placeholder="วางลิงก์เพลง .mp3 ตรงนี้">
+                </div>
+                
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+                <h3>ปรับแต่งสี ( Hex Code # )</h3>
+                
+                <div class="form-group">
+                    <label>สีพื้นหลังเว็บ</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="picker-bg" onchange="syncColorInput('picker-bg', 'setting-bg-color')">
+                        <input type="text" id="setting-bg-color" placeholder="#FFF0F5" onchange="syncColorPicker('setting-bg-color', 'picker-bg')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>สีฟอนต์ตัวหนังสือ</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="picker-text" onchange="syncColorInput('picker-text', 'setting-text-color')">
+                        <input type="text" id="setting-text-color" placeholder="#5A4A42" onchange="syncColorPicker('setting-text-color', 'picker-text')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>สีปุ่ม / ไอคอน</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="picker-btn" onchange="syncColorInput('picker-btn', 'setting-btn-color')">
+                        <input type="text" id="setting-btn-color" placeholder="#FFB6C1" onchange="syncColorPicker('setting-btn-color', 'picker-btn')">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>สีข้อความบนปุ่ม</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" id="picker-btn-text" onchange="syncColorInput('picker-btn-text', 'setting-btn-text-color')">
+                        <input type="text" id="setting-btn-text-color" placeholder="#FFFFFF" onchange="syncColorPicker('setting-btn-text-color', 'picker-btn-text')">
+                    </div>
+                </div>
+
+                <hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+                <div class="form-group">
+                    <label>เปลี่ยนรหัสผ่านแอดมิน</label>
+                    <input type="password" id="setting-admin-pass" placeholder="รหัสผ่านใหม่">
+                </div>
+
+                <button type="submit" class="btn-submit">บันทึกการตั้งค่า</button>
+            </form>
+        </div>
+    </div>
+
+    <audio id="bg-music" loop></audio>
+
+    <script>
+              let defaultSettings = {
+            shopName: "jaoriche studio",
+            shopDesc: "ขอบคุณที่เข้ามาแสดงความพึงพอใจค่ะ",
+            bannerUrl: "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1000",
+            musicUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+            bgColor: "#FFF0F5",
+            textColor: "#5A4A42",
+            btnColor: "#FFB6C1",
+            btnTextColor: "#FFFFFF",
+            adminPass: "160243"
+        };
+
+        let defaultReviews = [
+            { id: 1, name: "Mochi", msg: "แม่ค้าน่ารักมากๆ ตอบแชทไว ส่งของเร็วสุดๆ เลยค่ะ💖" },
+            { id: 2, name: "Peach", msg: "งานสวยตามปก ถูกใจมากๆ ไว้อุดหนุนอีกแน่นอนค่ะ" }
+        ];
+
+        let settings = JSON.parse(localStorage.getItem('shopSettings')) || defaultSettings;
+        let reviews = JSON.parse(localStorage.getItem('shopReviews')) || defaultReviews;
+        let isAdminLoggedIn = false;
+        let isPlaying = false;
+
+        const audio = document.getElementById('bg-music');
+
+        window.onload = function() {
+            applySettings();
+            renderReviews();
+        };
+
+        function formatDriveLink(url) {
+            if (url.includes('drive.google.com')) {
+                const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                }
+            }
+            return url;
+        }
+
+        function applySettings() {
+            document.getElementById('nav-logo').innerText = settings.shopName;
+            document.getElementById('site-title').innerText = settings.shopName + " - เครดิตการซื้อขาย";
+            document.getElementById('display-shop-name').innerText = settings.shopName;
+            document.getElementById('display-shop-desc').innerText = settings.shopDesc;
+            document.getElementById('shop-banner').src = formatDriveLink(settings.bannerUrl);
+
+            document.documentElement.style.setProperty('--bg-color', settings.bgColor);
+            document.documentElement.style.setProperty('--text-color', settings.textColor);
+            document.documentElement.style.setProperty('--btn-color', settings.btnColor);
+            document.documentElement.style.setProperty('--btn-text-color', settings.btnTextColor);
+
+            if (audio.src !== settings.musicUrl) {
+                audio.src = settings.musicUrl;
+            }
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = '';
+
+            reviews.forEach(r => {
+                const firstLetter = r.name.charAt(0).toUpperCase();
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    ${isAdminLoggedIn ? `<i class="fa-solid fa-trash delete-btn" onclick="deleteReview(${r.id})"></i>` : ''}
+                    <div class="card-header">
+                        <div class="avatar">${firstLetter}</div>
+                        <div class="user-info">
+                            <div class="name">${escapeHtml(r.name)}</div>
+                            <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        </div>
+                    </div>
+                    <div class="review-text">${escapeHtml(r.msg)}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') return;
+
+            const heart = document.createElement('div');
+            heart.className = 'heart-particle';
+            const icons = ['💗', '✨', '💖', '🌸', '🎀'];
+            heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 1000);
+        });
+
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function submitReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewer-name').value;
+            const msg = document.getElementById('reviewer-msg').value;
+
+            const newReview = { id: Date.now(), name: name, msg: msg };
+            reviews.unshift(newReview);
+            localStorage.setItem('shopReviews', JSON.stringify(reviews));
+            renderReviews();
+
+            document.getElementById('reviewer-name').value = '';
+            document.getElementById('reviewer-msg').value = '';
+            closeModal('review-modal');
+            alert('ขอบคุณสำหรับรีวิวนะคะ! ✨');
+        }
+
+        function openAdminModal() {
+            if (isAdminLoggedIn) { openAdminPanel(); } 
+            else { openModal('login-modal'); }
+        }
+
+        function loginAdmin(e) {
+            e.preventDefault();
+            const passInput = document.getElementById('admin-password-input').value;
+            if (passInput === settings.adminPass) {
+                isAdminLoggedIn = true;
+                closeModal('login-modal');
+                document.getElementById('admin-password-input').value = '';
+                document.getElementById('admin-login-btn').innerHTML = `<i class="fa-solid fa-sliders"></i> หลังบ้าน`;
+                renderReviews();
+                openAdminPanel();
+            } else {
+                alert('รหัสผ่านไม่ถูกต้องค่ะ!');
+            }
+        }
+
+        function openAdminPanel() {
+            document.getElementById('setting-shop-name').value = settings.shopName;
+            document.getElementById('setting-shop-desc').value = settings.shopDesc;
+            document.getElementById('setting-banner-url').value = settings.bannerUrl;
+            document.getElementById('setting-music-url').value = settings.musicUrl;
+            
+            document.getElementById('setting-bg-color').value = settings.bgColor;
+            document.getElementById('picker-bg').value = settings.bgColor;
+            
+            document.getElementById('setting-text-color').value = settings.textColor;
+            document.getElementById('picker-text').value = settings.textColor;
+            
+            document.getElementById('setting-btn-color').value = settings.btnColor;
+            document.getElementById('picker-btn').value = settings.btnColor;
+            
+            document.getElementById('setting-btn-text-color').value = settings.btnTextColor;
+            document.getElementById('picker-btn-text').value = settings.btnTextColor;
+            
+            document.getElementById('setting-admin-pass').value = settings.adminPass;
+
+            openModal('admin-panel-modal');
+        }
+
+        function saveAdminSettings(e) {
+            e.preventDefault();
+            settings.shopName = document.getElementById('setting-shop-name').value;
+            settings.shopDesc = document.getElementById('setting-shop-desc').value;
+            settings.bannerUrl = document.getElementById('setting-banner-url').value;
+            settings.musicUrl = document.getElementById('setting-music-url').value;
+            
+            settings.bgColor = document.getElementById('setting-bg-color').value;
+            settings.textColor = document.getElementById('setting-text-color').value;
+            settings.btnColor = document.getElementById('setting-btn-color').value;
+            settings.btnTextColor = document.getElementById('setting-btn-text-color').value;
+            
+            const newPass = document.getElementById('setting-admin-pass').value;
+            if (newPass.trim() !== "") { settings.adminPass = newPass; }
+
+            localStorage.setItem('shopSettings', JSON.stringify(settings));
+            applySettings();
+            closeModal('admin-panel-modal');
+            alert('บันทึกการตั้งค่าเรียบร้อยแล้วค่ะ!');
+        }
+
+        function deleteReview(id) {
+            if (confirm('คุณต้องการลบรีวิวนี้ใช่หรือไม่?')) {
+                reviews = reviews.filter(r => r.id !== id);
+                localStorage.setItem('shopReviews', JSON.stringify(reviews));
+                renderReviews();
+            }
+        }
+
+        function syncColorInput(pickerId, inputId) {
+            document.getElementById(inputId).value = document.getElementById(pickerId).value.toUpperCase();
+        }
+        function syncColorPicker(inputId, pickerId) {
+            let val = document.getElementById(inputId).value;
+            if (/^#[0-9A-F]{6}$/i.test(val)) {
+                document.getElementById(pickerId).value = val;
+            }
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('music-btn');
+            if (isPlaying) {
+                audio.pause();
+                btn.style.opacity = '1';
+            } else {
+                audio.play().catch(() => alert('กรุณาวางลิงก์เพลง .mp3 ที่ถูกต้องในระบบหลังบ้านก่อนนะคะ'));
+                btn.style.opacity = '0.6';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
